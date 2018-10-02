@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using System.Linq;
 using FFImageLoading;
 using PanCardView.Extensions;
+using System;
 
 namespace PanCardViewSample.ViewModels
 {
@@ -17,14 +18,17 @@ namespace PanCardViewSample.ViewModels
 
 		public CardsSampleViewModel()
 		{
-			Items = new ObservableCollection<object>
-			{
-				new { Source = CreateSource(), Ind = _ImageCount++, Color = Color.Red },
-				new { Source = CreateSource(), Ind = _ImageCount++, Color = Color.Green },
-				new { Source = CreateSource(), Ind = _ImageCount++, Color = Color.Gold },
-				new { Source = CreateSource(), Ind = _ImageCount++, Color = Color.Silver },
-				new { Source = CreateSource(), Ind = _ImageCount++, Color = Color.Blue }
-			};
+            Items = new ObservableCollection<object>
+            {
+                new { Description="Texto de descripción", Date = DateTime.Now.ToShortDateString(), Color = Color.Red },
+                new { Description="Texto de descripción en varias líneas líneas líneas líneas líneas líneas líneas líneas líneas líneas líneas líneas líneas líneas líneas líneas", Date = DateTime.Now.ToShortDateString(), Color = Color.Green },
+                new { Description="Otro texto de descripción diferente", Date = DateTime.Now.ToShortDateString(), Color = Color.Gold },
+                new { Description="Texto de descripción 4324", Date = DateTime.Now.ToShortDateString(), Color = Color.Silver },
+                new { Description="Texto de descripción 454554", Date = DateTime.Now.ToShortDateString(), Color = Color.Blue }
+            };
+
+            SubItems = new ObservableCollection<string>() { "Texto 1", "Texto 2", "Texto 3", "Texto 4","Texto 5","Texto 6","Texto 7","Texto 8"};
+
 
 			PanPositionChangedCommand = new Command(v =>
 			{
@@ -63,6 +67,8 @@ namespace PanCardViewSample.ViewModels
 		}
 
 		public ObservableCollection<object> Items { get; }
+
+        public ObservableCollection<string> SubItems { get; }
 
 		private string CreateSource()
 		{

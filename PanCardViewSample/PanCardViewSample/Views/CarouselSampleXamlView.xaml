@@ -8,40 +8,61 @@
     xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
     x:Class="PanCardViewSample.Views.CarouselSampleXamlView"
     BackgroundColor="Black"
-    Title="Carousel Xaml">
+    Title="Carousel Xaml"
+    x:Name="this">
 
     <ContentPage.BindingContext>
         <viewModels:CardsSampleViewModel/>
     </ContentPage.BindingContext>
 
-    <cards:CarouselView 
-        ItemsSource="{Binding Items}"
-        SlideShowDuration="3500"
-        SelectedIndex="{Binding CurrentIndex}">
-        <cards:CarouselView.ItemTemplate>
+    <ListView
+        x:Name="Listview"
+        HasUnevenRows="true"
+        ItemsSource="{Binding SubItems}"
+        Refreshing="Handle_Refreshing"
+        IsPullToRefreshEnabled="true">
+        <ListView.Header>
+            <cards:CarouselView 
+                HeightRequest="300"
+                ItemsSource="{Binding Items}">
+                <cards:CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid BackgroundColor="{Binding Color}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="2"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="0.5*"/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <BoxView Grid.Row="0" BackgroundColor="Yellow"/>
+                            <BoxView Grid.Row="2" BackgroundColor="Yellow"/>
+                            <BoxView Grid.Row="4" BackgroundColor="Yellow"/>
+                            <BoxView Grid.Row="5" BackgroundColor="Yellow"/>
+                            <Label 
+                                Grid.Row="1"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center"
+                                VerticalOptions="FillAndExpand"
+                                HorizontalOptions="FillAndExpand"
+                                Text="{Binding Description}"/>
+                            <Label 
+                                Grid.Row="3"
+                                VerticalTextAlignment="Center"
+                                HorizontalTextAlignment="Center"
+                                VerticalOptions="FillAndExpand"
+                                HorizontalOptions="FillAndExpand"
+                                Text="{Binding Date}"/>
+                        </Grid>
+                    </DataTemplate>
+                </cards:CarouselView.ItemTemplate>
+            </cards:CarouselView>
+        </ListView.Header>
+        <ListView.ItemTemplate>
             <DataTemplate>
-                <ContentView>
-                    <Frame 
-                        VerticalOptions="Center"
-                        HorizontalOptions="Center"
-                        HeightRequest="300"
-                        WidthRequest="300"
-                        Padding="0" 
-                        HasShadow="false"
-                        IsClippedToBounds="true"
-                        CornerRadius="10"
-                        BackgroundColor="{Binding Color}">
-                        
-                        <ffimage:CachedImage Source="{Binding Source}"/> 
-                        
-                    </Frame>
-                </ContentView>
+                <TextCell Text="{Binding .}"></TextCell>
             </DataTemplate>
-        </cards:CarouselView.ItemTemplate>
-        
-        <controls:IndicatorsControl ToFadeDuration="1500"/>
-        <controls:LeftArrowControl ToFadeDuration="2500"/>
-        <controls:RightArrowControl ToFadeDuration="2500"/>
-    </cards:CarouselView>
-    
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>
